@@ -13,10 +13,19 @@ NestJS API with MongoDB, JWT auth, roles, and Products CRUD.
    - `KENILITY_JWT_SECRET`
    - `KENILITY_REFRESH_SECRET`
    - `KENILITY_BOOTSTRAP_TOKEN`
+   - `KENILITY_JWT_EXPIRES_SECONDS=900`
+   - `KENILITY_REFRESH_EXPIRES_SECONDS=604800`
 2. Install and run:
 ```bash
 npm install
 npm run start:dev
+```
+
+## Docker
+
+Build and run the API + MongoDB:
+```bash
+docker compose up --build
 ```
 
 ## Auth Bootstrap (No Users Yet)

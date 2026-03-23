@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  app:
+    build: .
+    depends_on:
+      - mongo
+    environment:
+      KENILITY_MONGODB_URI: mongodb://mongo:27017/nest_auth
+      KENILITY_JWT_SECRET: replace-me
+      KENILITY_REFRESH_SECRET: replace-me
+      KENILITY_BOOTSTRAP_TOKEN: replace-me
+      KENILITY_PORT: 3000
+      KENILITY_BCRYPT_ROUNDS: 10
+      KENILITY_JWT_EXPIRES_SECONDS: 900
+      KENILITY_REFRESH_EXPIRES_SECONDS: 604800
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+
+volumes:
+  mongo_data:
