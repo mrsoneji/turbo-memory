@@ -92,6 +92,7 @@ The app starts even if MongoDB is down. Readiness will fail until the database i
 ```
 
 Health endpoints are implemented using `@nestjs/terminus`.
+This is used as a wait strategy to coordinate startup with MongoDB availability.
 
 ## Run
 
