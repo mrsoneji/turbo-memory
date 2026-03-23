@@ -44,4 +44,10 @@ export class SearchOrdersDto {
   @MinLength(1)
   @IsOptional()
   clientContains?: string;
+
+  @ApiPropertyOptional({ example: '' })
+  @IsString()
+  @MinLength(1)
+  @IsOptional()
+  invoiceNumber?: string;
 }

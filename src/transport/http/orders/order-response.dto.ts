@@ -24,6 +24,9 @@ export class OrderResponseDto {
   @ApiProperty()
   id: string;
 
+  @ApiProperty({ required: false, nullable: true })
+  invoiceNumber?: string;
+
   @ApiProperty()
   clientName: string;
 

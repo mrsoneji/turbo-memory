@@ -65,6 +65,7 @@ describe('OrdersService', () => {
     };
     model.create.mockResolvedValue({
       _id: '1',
+      invoiceNumber: 'INV-1',
       clientName: 'Acme',
       total: 20,
       items: [
@@ -74,11 +75,13 @@ describe('OrdersService', () => {
 
     const service = new OrdersService(model as any, productsService);
     const result = await service.createOrder({
+      invoiceNumber: 'INV-1',
       clientName: 'Acme',
       items: [{ productId: '507f1f77bcf86cd799439011', quantity: 2 }],
     });
 
     expect(result.total).toBe(20);
+    expect(result.invoiceNumber).toBe('INV-1');
     expect(productsService.getById).toHaveBeenCalledWith('507f1f77bcf86cd799439011');
   });
 
@@ -92,10 +95,14 @@ describe('OrdersService', () => {
       sortBy: 'total',
       sortDir: 'desc',
       clientContains: 'ac',
+      invoiceNumber: 'INV-1',
     } as any);
 
     const meta = (model as any).__getLast();
-    expect(meta.lastFilter).toEqual({ clientName: { $regex: 'ac', $options: 'i' } });
+    expect(meta.lastFilter).toEqual({
+      clientName: { $regex: 'ac', $options: 'i' },
+      invoiceNumber: 'INV-1',
+    });
     expect(meta.lastSort).toEqual({ total: -1 });
     expect(meta.lastSkip).toBe(5);
     expect(meta.lastLimit).toBe(5);

@@ -28,6 +28,9 @@ const OrderItemSnapshotSchema = SchemaFactory.createForClass(OrderItemSnapshot);
 
 @Schema({ timestamps: true })
 export class Order {
+  @Prop({ trim: true, unique: true, sparse: true })
+  invoiceNumber?: string;
+
   @Prop({ required: true, trim: true })
   clientName: string;
 
@@ -41,3 +44,4 @@ export class Order {
 export const OrderSchema = SchemaFactory.createForClass(Order);
 OrderSchema.index({ clientName: 1 });
 OrderSchema.index({ createdAt: -1 });
+OrderSchema.index({ invoiceNumber: 1 }, { unique: true, sparse: true });

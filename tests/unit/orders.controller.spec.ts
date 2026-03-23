@@ -9,6 +9,8 @@ const makeOrdersService = () => ({
   getById: jest.fn(),
   createOrder: jest.fn(),
   updateById: jest.fn(),
+  getTotalSoldLastMonth: jest.fn(),
+  getHighestTotalOrder: jest.fn(),
 });
 
 describe('OrdersController', () => {
@@ -22,8 +24,13 @@ describe('OrdersController', () => {
     }).compile();
 
     const controller = moduleRef.get(OrdersController);
-    await controller.list({ page: 2, limit: 5, clientContains: 'ac' } as any);
-    expect(ordersService.listOrders).toHaveBeenCalledWith({ page: 2, limit: 5, clientContains: 'ac' });
+    await controller.list({ page: 2, limit: 5, clientContains: 'ac', invoiceNumber: 'INV-1' } as any);
+    expect(ordersService.listOrders).toHaveBeenCalledWith({
+      page: 2,
+      limit: 5,
+      clientContains: 'ac',
+      invoiceNumber: 'INV-1',
+    });
   });
 
   it('calls getById', async () => {
@@ -51,11 +58,13 @@ describe('OrdersController', () => {
 
     const controller = moduleRef.get(OrdersController);
     await controller.create({
+      invoiceNumber: 'INV-1',
       clientName: 'Acme',
       items: [{ productId: 'p1', quantity: 2 }],
     } as CreateOrderDto);
 
     expect(ordersService.createOrder).toHaveBeenCalledWith({
+      invoiceNumber: 'INV-1',
       clientName: 'Acme',
       items: [{ productId: 'p1', quantity: 2 }],
     });
@@ -71,8 +80,9 @@ describe('OrdersController', () => {
     }).compile();
 
     const controller = moduleRef.get(OrdersController);
-    await controller.update('1', { items: [{ productId: 'p1', quantity: 3 }] } as UpdateOrderDto);
+    await controller.update('1', { invoiceNumber: 'INV-2', items: [{ productId: 'p1', quantity: 3 }] } as UpdateOrderDto);
     expect(ordersService.updateById).toHaveBeenCalledWith('1', {
+      invoiceNumber: 'INV-2',
       clientName: undefined,
       items: [{ productId: 'p1', quantity: 3 }],
     });

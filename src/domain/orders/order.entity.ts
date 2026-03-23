@@ -9,6 +9,7 @@ export class OrderItemSnapshotEntity {
 
 export class OrderEntity {
   id: string;
+  invoiceNumber?: string;
   clientName: string;
   total: number;
   items: OrderItemSnapshotEntity[];

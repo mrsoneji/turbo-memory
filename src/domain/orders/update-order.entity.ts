@@ -4,6 +4,7 @@ export class UpdateOrderItem {
 }
 
 export class UpdateOrder {
+  invoiceNumber?: string;
   clientName?: string;
   items?: UpdateOrderItem[];
 }

@@ -119,6 +119,7 @@ Search on `GET /products` supports pagination (`page`, `limit`), sorting (`sortB
 ## Orders
 
 Orders store embedded product snapshots (full item objects) to preserve historical pricing; they do not store only product references.
+Orders can include an optional unique `invoiceNumber`.
 
 Endpoints:
 1. `POST /products` (create)
@@ -132,6 +133,7 @@ Endpoints:
 ## Tests
 
 Unit tests run with Jest. Requires Node.js 18+ (recommended 20 LTS).
+Current test count: 35.
 
 ```bash
 npm test

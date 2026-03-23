@@ -27,6 +27,7 @@ export class OrdersController {
   @ApiQuery({ name: 'sortDir', required: false, enum: ['asc', 'desc'], example: '' })
   @ApiQuery({ name: 'clientName', required: false, example: '' })
   @ApiQuery({ name: 'clientContains', required: false, example: '' })
+  @ApiQuery({ name: 'invoiceNumber', required: false, example: '' })
   @ApiResponse({ status: 200, description: 'List of orders', type: OrderResponseDto, isArray: true })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiResponse({ status: 403, description: 'Forbidden' })
@@ -52,6 +53,7 @@ export class OrdersController {
   @ApiResponse({ status: 403, description: 'Forbidden' })
   create(@Body() dto: CreateOrderDto) {
     return this.ordersService.createOrder({
+      invoiceNumber: dto.invoiceNumber,
       clientName: dto.clientName,
       items: dto.items.map((item) => ({ productId: item.productId, quantity: item.quantity })),
     });
@@ -69,6 +71,7 @@ export class OrdersController {
   @ApiResponse({ status: 404, description: 'Not found' })
   update(@Param('id') id: string, @Body() dto: UpdateOrderDto) {
     return this.ordersService.updateById(id, {
+      invoiceNumber: dto.invoiceNumber,
       clientName: dto.clientName,
       items: dto.items?.map((item) => ({ productId: item.productId, quantity: item.quantity })),
     });

@@ -1,6 +1,15 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { ArrayMinSize, IsMongoId, IsString, MinLength, ValidateNested, IsInt, Min } from 'class-validator';
+import {
+  ArrayMinSize,
+  IsInt,
+  IsMongoId,
+  IsOptional,
+  IsString,
+  Min,
+  MinLength,
+  ValidateNested,
+} from 'class-validator';
 
 export class CreateOrderItemDto {
   @ApiProperty()
@@ -15,6 +24,12 @@ export class CreateOrderItemDto {
 }
 
 export class CreateOrderDto {
+  @ApiProperty({ example: 'INV-2026-001', required: false })
+  @IsString()
+  @MinLength(1)
+  @IsOptional()
+  invoiceNumber?: string;
+
   @ApiProperty({ example: 'Acme Corp' })
   @IsString()
   @MinLength(1)

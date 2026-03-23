@@ -19,6 +19,7 @@ export class OrdersService {
     const items = await this.buildSnapshots(input.items);
     const total = items.reduce((sum, item) => sum + item.lineTotal, 0);
     const created = await this.orderModel.create({
+      invoiceNumber: input.invoiceNumber,
       clientName: input.clientName,
       total,
       items: items.map((item) => ({
@@ -39,6 +40,9 @@ export class OrdersService {
       filter.clientName = query.clientName;
     } else if (query?.clientContains) {
       filter.clientName = { $regex: query.clientContains, $options: 'i' };
+    }
+    if (query?.invoiceNumber) {
+      filter.invoiceNumber = query.invoiceNumber;
     }
 
     const page = query?.page ?? 1;
@@ -81,6 +85,7 @@ export class OrdersService {
       id,
       {
         $set: {
+          ...(input.invoiceNumber !== undefined ? { invoiceNumber: input.invoiceNumber } : {}),
           ...(input.clientName !== undefined ? { clientName: input.clientName } : {}),
           ...(itemsSnapshot ? { items: itemsSnapshot.map((item) => ({
             productId: new Types.ObjectId(item.productId),
@@ -149,6 +154,7 @@ export class OrdersService {
   private toEntity(doc: OrderDocument): OrderEntity {
     return {
       id: doc._id.toString(),
+      invoiceNumber: doc.invoiceNumber,
       clientName: doc.clientName,
       total: doc.total,
       items: doc.items.map((item) => ({

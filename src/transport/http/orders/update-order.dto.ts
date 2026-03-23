@@ -24,6 +24,12 @@ export class UpdateOrderItemDto {
 }
 
 export class UpdateOrderDto {
+  @ApiPropertyOptional({ example: 'INV-2026-001' })
+  @IsString()
+  @MinLength(1)
+  @IsOptional()
+  invoiceNumber?: string;
+
   @ApiPropertyOptional({ example: 'Acme Corp' })
   @IsString()
   @MinLength(1)
