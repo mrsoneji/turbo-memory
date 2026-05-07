@@ -4,6 +4,7 @@ export class CreateOrderItem {
 }
 
 export class CreateOrder {
+  createdBy: string;
   invoiceNumber?: string;
   clientName: string;
   items: CreateOrderItem[];

@@ -10,6 +10,7 @@ import { UpdateOrderDto } from '../transport/http/orders/update-order.dto';
 import { OrderResponseDto } from '../transport/http/orders/order-response.dto';
 import { SearchOrdersDto } from '../transport/http/orders/search-orders.dto';
 import { HighestTotalOrderDto, TotalSoldLastMonthDto } from '../transport/http/orders/order-metrics.dto';
+import { CurrentUser } from '../common/decorators/current-user.decorator';
 
 @ApiTags('Orders')
 @ApiBearerAuth()
@@ -51,8 +52,9 @@ export class OrdersController {
   @ApiResponse({ status: 400, description: 'Validation error' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiResponse({ status: 403, description: 'Forbidden' })
-  create(@Body() dto: CreateOrderDto) {
+  create(@Body() dto: CreateOrderDto, @CurrentUser() user: { sub: string }) {
     return this.ordersService.createOrder({
+      createdBy: user.sub,
       invoiceNumber: dto.invoiceNumber,
       clientName: dto.clientName,
       items: dto.items.map((item) => ({ productId: item.productId, quantity: item.quantity })),

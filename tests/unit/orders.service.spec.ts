@@ -22,6 +22,7 @@ const makeOrderModel = () => {
                     exec: () => [
                       {
                         _id: '1',
+                        createdBy: '507f1f77bcf86cd799439011',
                         clientName: 'Acme',
                         total: 20,
                         items: [
@@ -65,6 +66,7 @@ describe('OrdersService', () => {
     };
     model.create.mockResolvedValue({
       _id: '1',
+      createdBy: '507f1f77bcf86cd799439011',
       invoiceNumber: 'INV-1',
       clientName: 'Acme',
       total: 20,
@@ -75,6 +77,7 @@ describe('OrdersService', () => {
 
     const service = new OrdersService(model as any, productsService);
     const result = await service.createOrder({
+      createdBy: '507f1f77bcf86cd799439011',
       invoiceNumber: 'INV-1',
       clientName: 'Acme',
       items: [{ productId: '507f1f77bcf86cd799439011', quantity: 2 }],
@@ -82,6 +85,7 @@ describe('OrdersService', () => {
 
     expect(result.total).toBe(20);
     expect(result.invoiceNumber).toBe('INV-1');
+    expect(result.createdBy).toBe('507f1f77bcf86cd799439011');
     expect(productsService.getById).toHaveBeenCalledWith('507f1f77bcf86cd799439011');
   });
 
@@ -114,6 +118,7 @@ describe('OrdersService', () => {
     model.findById.mockReturnValue({
       exec: () => ({
         _id: '1',
+        createdBy: '507f1f77bcf86cd799439011',
         clientName: 'Acme',
         total: 20,
         items: [
@@ -140,6 +145,7 @@ describe('OrdersService', () => {
     model.findById.mockReturnValue({ exec: () => ({ _id: '1' }) });
     model.findByIdAndUpdate.mockResolvedValue({
       _id: '1',
+      createdBy: '507f1f77bcf86cd799439011',
       clientName: 'Acme',
       total: 20,
       items: [
@@ -173,6 +179,7 @@ describe('OrdersService', () => {
       sort: () => ({
         exec: () => ({
           _id: '1',
+          createdBy: '507f1f77bcf86cd799439011',
           clientName: 'Acme',
           total: 200,
           items: [

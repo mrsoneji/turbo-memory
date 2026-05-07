@@ -28,6 +28,9 @@ const OrderItemSnapshotSchema = SchemaFactory.createForClass(OrderItemSnapshot);
 
 @Schema({ timestamps: true })
 export class Order {
+  @Prop({ type: MongooseSchema.Types.ObjectId, required: true })
+  createdBy: Types.ObjectId;
+
   @Prop({ trim: true, unique: true, sparse: true })
   invoiceNumber?: string;
 

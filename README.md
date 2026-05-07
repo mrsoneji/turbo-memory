@@ -27,6 +27,7 @@ Build and run the API + MongoDB:
 ```bash
 docker compose up --build
 ```
+Docker is optional; you can run locally without it using the Quickstart steps above.
 
 ## Auth Bootstrap (No Users Yet)
 
@@ -120,6 +121,7 @@ Search on `GET /products` supports pagination (`page`, `limit`), sorting (`sortB
 
 Orders store embedded product snapshots (full item objects) to preserve historical pricing; they do not store only product references.
 Orders can include an optional unique `invoiceNumber`.
+Each order stores `createdBy` from the JWT of the user who created it.
 
 Endpoints:
 1. `POST /products` (create)

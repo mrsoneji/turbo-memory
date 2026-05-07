@@ -61,9 +61,10 @@ describe('OrdersController', () => {
       invoiceNumber: 'INV-1',
       clientName: 'Acme',
       items: [{ productId: 'p1', quantity: 2 }],
-    } as CreateOrderDto);
+    } as CreateOrderDto, { sub: 'user-1' });
 
     expect(ordersService.createOrder).toHaveBeenCalledWith({
+      createdBy: 'user-1',
       invoiceNumber: 'INV-1',
       clientName: 'Acme',
       items: [{ productId: 'p1', quantity: 2 }],

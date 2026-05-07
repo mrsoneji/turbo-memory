@@ -19,6 +19,7 @@ export class OrdersService {
     const items = await this.buildSnapshots(input.items);
     const total = items.reduce((sum, item) => sum + item.lineTotal, 0);
     const created = await this.orderModel.create({
+      createdBy: new Types.ObjectId(input.createdBy),
       invoiceNumber: input.invoiceNumber,
       clientName: input.clientName,
       total,
@@ -154,6 +155,7 @@ export class OrdersService {
   private toEntity(doc: OrderDocument): OrderEntity {
     return {
       id: doc._id.toString(),
+      createdBy: doc.createdBy.toString(),
       invoiceNumber: doc.invoiceNumber,
       clientName: doc.clientName,
       total: doc.total,
